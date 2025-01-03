@@ -17,3 +17,7 @@ Route::put('/category/{category}' , [CategoryController::class , 'update']);
 Route::delete('/category/{category}' , [CategoryController::class , 'delete']);
 
 Route::get('/post' , [PostController::class , 'index']);
+Route::get('/post/{post}' , [PostController::class, 'show']);
+Route::post('/post' , [PostController::class , 'store']);
+Route::put('/post/{post}' , [PostController::class , 'update']);
+Route::delete('/post/{post}' , [PostController::class , 'delete']);

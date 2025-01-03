@@ -24,7 +24,7 @@ class CategoryController extends Controller
             'name' => $request->name,
         ]);
 
-        return response()->json(['message' => 'Catgeory created successfully!' , 'data' => $category] , 200);
+        return new CategoryResource($category);
     }
 
     public function show($id)
@@ -52,7 +52,7 @@ class CategoryController extends Controller
             'name' => $request->name ?? $category->name,
         ]);
 
-        return response()->json(['message' => 'Category updated successfully', 'data' => $category]);
+        return new CategoryResource($category);
     }
 
     public function delete($id)
