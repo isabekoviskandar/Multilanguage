@@ -11,9 +11,11 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return CategoryResource::collection($categories);
+        // dd($categories);
+        return view('multi' , compact('categories'));
     }
 
+    
     public function store(Request $request){
         $category = Category::create([
             'name' => [
@@ -23,9 +25,10 @@ class CategoryController extends Controller
             ],
             'order' => $request->order
         ]);
-        return response()->json(new CategoryResource($category), 201);
+        return view('multi' , compact('category'));
     }
 
+    
 
     public function show($id)
     {
