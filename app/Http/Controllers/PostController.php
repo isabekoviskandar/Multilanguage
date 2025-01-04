@@ -25,24 +25,32 @@ class PostController extends Controller
             return response()->json(['message' => 'Post not found'], 404);
         }
 
-        return response()->json($post);
+        return new PostResource($post);
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-        ]);
-
+        // dd(123);
+        // return $request->all();
+        // dd($request->all());
         $post = Post::create([
             'category_id' => $request->category_id,
-            'title' => $request->title,
-            'description' => $request->description,
+            'title' => [
+                'uz' => $request->title_uz,
+                'en' => $request->title_en,
+                'ru' => $request->title_ru
+            ],
+            'description' => [
+                'uz' => $request->description_uz,
+                'en' => $request->description_en,
+                'ru' => $request->description_ru
+            ],
         ]);
 
-        return response()->json(['message' => 'Post created successfully', 'data' => $post], 201);
+        return response()->json([
+            'message' => 'Post created successfully!',
+            'data' => new PostResource($post),
+        ], 201);
     }
 
     public function update(Request $request, $id)
@@ -61,11 +69,23 @@ class PostController extends Controller
 
         $post->update([
             'category_id' => $request->category_id ?? $post->category_id,
-            'title' => $request->title ?? $post->title,
-            'description' => $request->description ?? $post->description,
+            'category_id' => $request->category_id,
+            'title' => [
+                'uz' => $request->title_uz,
+                'en' => $request->title_en,
+                'ru' => $request->title_ru
+            ],
+            'description' => [
+                'uz' => $request->description_uz,
+                'en' => $request->description_en,
+                'ru' => $request->description_ru
+            ],
         ]);
 
-        return response()->json(['message' => 'Post updated successfully', 'data' => $post]);
+        return response()->json([
+            'message' => 'Post updated successfully!',
+            'data' => new PostResource($post),
+        ], 201);
     }
 
     public function delete($id)

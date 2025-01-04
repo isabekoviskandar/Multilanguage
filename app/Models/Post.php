@@ -17,6 +17,11 @@ class Post extends Model
         'description',
     ];
 
+    protected $casts = 
+    [
+        'title'=>'array',
+        'description' => 'array',
+    ];
     public function category()
     {
         return $this->belongsTo(Category::class);

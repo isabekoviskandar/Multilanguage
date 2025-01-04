@@ -13,6 +13,13 @@ class Category extends Model
     protected $fillable = 
     [
         'name',
+        'order',
+    ];
+
+    protected $casts = 
+    [
+        'name' => 'array',
+        'order' => 'array',
     ];
 
     public function post()

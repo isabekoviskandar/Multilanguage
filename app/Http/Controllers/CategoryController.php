@@ -14,18 +14,18 @@ class CategoryController extends Controller
         return CategoryResource::collection($categories);
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-        ]);
-
+    public function store(Request $request){
         $category = Category::create([
-            'name' => $request->name,
+            'name' => [
+                'uz' => $request->name_uz,
+                'en' => $request->name_en,
+                'ru' => $request->name_ru
+            ],
+            'order' => $request->order
         ]);
-
-        return new CategoryResource($category);
+        return response()->json(new CategoryResource($category), 201);
     }
+
 
     public function show($id)
     {
@@ -49,10 +49,18 @@ class CategoryController extends Controller
         ]);
 
         $category->update([
-            'name' => $request->name ?? $category->name,
+            'name' => [
+                'uz' => $request->name_uz,
+                'en' => $request->name_en,
+                'ru' => $request->name_ru
+            ],
+            'order' => $request->order
         ]);
 
-        return new CategoryResource($category);
+        return response()->json([
+            'message' => 'Category update successfully!',
+            'data' => new CategoryResource($category),
+        ], 201);
     }
 
     public function delete($id)
